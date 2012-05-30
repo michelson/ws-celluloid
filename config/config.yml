@@ -1,9 +1,5 @@
 defaults: &defaults
-  
-  app_name: Osc
-  
-  alive_sessions: 1 #minutes
-  
+    
   server:
     host: tcp://127.0.0.1
     port: 8080
@@ -14,11 +10,6 @@ defaults: &defaults
     type: redis
     host: 127.0.0.1
     port: 6379
-
-  pusher:
-    app_id: "xxx"
-    key: "xxx"
-    secret: "xxx"
 
 development:
   <<: *defaults
