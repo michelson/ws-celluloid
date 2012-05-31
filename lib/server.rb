@@ -24,11 +24,12 @@ class Server
     puts "*** Received connection from #{host}:#{port}"
     loop { 
       begin
+        #puts socket.readpartial(1024)
         socket.write receive_data(socket.readpartial(1024)) 
       rescue Exception => e
         puts e.message  
         puts e.backtrace
-        finalize
+        #finalize
       end
       }
   rescue EOFError
@@ -44,7 +45,8 @@ class Server
     if !@hs.done?
       @hs.parse(data)
       if @hs.done?
-        send_data(@hs.to_s)
+        return @hs.to_s
+        #send_data(@hs.to_s)
       end
       return
     end
@@ -52,8 +54,7 @@ class Server
     @frame.append(data)
 
     while message = @frame.next
-      puts @frame.new(message).to_s
-      send_data @frame.new(message).to_s
+      return @frame.new(message).to_s
     end
   end
  

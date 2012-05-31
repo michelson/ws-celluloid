@@ -67,7 +67,7 @@ class WebSocket
 end
 
 
-ws = WebSocket.new("ws://localhost:8080", {:resource_name => '/', :version=>"0.0.0"})
+ws = WebSocket.new("ws://localhost:8080", {:resource_name => '/demo', :version=>"0.0.0"})
 
 
 
