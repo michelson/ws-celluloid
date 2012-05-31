@@ -1,10 +1,12 @@
 # encoding: utf-8
 
 #require 'addressable/uri'
-require "libwebsocket"
+#require "libwebsocket"
 require 'celluloid'
 require 'celluloid/io'
 require 'dcell'
+require './lib/web_socket'
+require './lib/web_socket_server'
 require './lib/server'
 
 
