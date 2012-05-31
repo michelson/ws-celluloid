@@ -36,8 +36,9 @@ class Server
   end
   
   def receive_data(data)
+    #data = data.force_encoding('utf-8') #.encode('ASCII-8BIT', 'utf-8') #.encode("ASCII-16BIT")
     puts data
-    @hs ||= LibWebSocket::Handshake::Server.new
+    @hs ||= LibWebSocket::OpeningHandshake::Server.new
     @frame ||= LibWebSocket::Frame.new
 
     if !@hs.done?
@@ -51,6 +52,7 @@ class Server
     @frame.append(data)
 
     while message = @frame.next
+      puts @frame.new(message).to_s
       send_data @frame.new(message).to_s
     end
   end

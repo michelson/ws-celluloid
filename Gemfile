@@ -6,5 +6,5 @@ source "http://rubygems.org"
 gem "celluloid"
 gem "celluloid-io"
 gem "dcell"
-gem "libwebsocket" , :git=>"https://github.com/imanel/libwebsocket.git"
+gem "libwebsocket" , :git=>"https://github.com/imanel/libwebsocket.git", :branch=>"v0.1"
 

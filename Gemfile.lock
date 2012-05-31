@@ -1,8 +1,9 @@
 GIT
   remote: https://github.com/imanel/libwebsocket.git
-  revision: 6ec281507935c710d43fe5119052fff696db8f94
+  revision: a5c0a7ce7efdfa702ff8589ce9f6a5a2201ef4bf
+  branch: v0.1
   specs:
-    libwebsocket (0.2.0.pre)
+    libwebsocket (0.1.3)
       addressable
 
 GEM

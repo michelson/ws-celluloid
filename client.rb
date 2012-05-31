@@ -8,10 +8,11 @@ require "libwebsocket"
 #require "libwebsocket"
 require 'benchmark'
 
+
 class WebSocket
 
   def initialize(url, params = {})
-    @hs ||= LibWebSocket::Handshake::Client.new(:url => url, :version => params[:version])
+    @hs ||= LibWebSocket::OpeningHandshake::Client.new(:url => url, :version => params[:version])
     @frame ||= LibWebSocket::Frame.new
 
     @socket = TCPSocket.new(@hs.url.host, @hs.url.port || 80)
@@ -24,7 +25,7 @@ class WebSocket
       next if data.nil?
 
       result = @hs.parse(data.chr)
-      puts result.inspect
+
       raise @hs.error unless result
 
       if @hs.done?
@@ -52,9 +53,7 @@ class WebSocket
     while message = @frame.next
       messages << message
     end
-    #puts messages
     messages
-    
   end
 
   def socket
@@ -67,7 +66,8 @@ class WebSocket
 
 end
 
-ws = WebSocket.new("ws://localhost:8080", {:resource_name => '/demo', :version=>"0.0.0"})
+
+ws = WebSocket.new("ws://localhost:8080", {:resource_name => '/', :version=>"0.0.0"})
 
 
 
