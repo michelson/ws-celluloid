@@ -57,7 +57,7 @@ class Connection
   end
 
   def receive_data(data)
-    puts [:receive_data, data]
+    #puts [:receive_data, data]
 
     if @handler
       @handler.receive_data(data.force_encoding("ASCII-8BIT"))
@@ -76,6 +76,7 @@ class Connection
     trigger_on_error(e)
     close_websocket_private(e.code)
   rescue => e
+    puts "SE FUE A LA MIELDA #{e.backtrace}"
     puts [:error, e]
     # These are application errors - raise unless onerror defined
     trigger_on_error(e) || raise(e)
@@ -85,11 +86,12 @@ class Connection
   end
 
   def dispatch(data)
+    data.force_encoding("ASCII-8BIT")
     if data.match(/\A<policy-file-request\s*\/>/)
       send_flash_cross_domain_file
       return false
     else
-      puts [:inbound_headers, data]
+      #puts [:inbound_headers, data]
       @data << data
       @handler = HandlerFactory.build(self, @data)
       unless @handler

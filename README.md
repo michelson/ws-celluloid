@@ -4,7 +4,7 @@
 ## DCell test
 
     bundle exec ruby server.rb
-    bundle exec ruby client.rb
+    bundle exec ruby pub.rb
     or
     foreman start
     
