@@ -184,6 +184,7 @@ class WebSocket
       if !@handshaked
         raise(WebSocket::Error, "call WebSocket\#handshake first")
       end
+      puts "Websocket RECEIVE #{gets}"
       case @web_socket_version
         
         when "hixie-75", "hixie-76"

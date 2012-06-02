@@ -16,10 +16,19 @@ Thread.new() do
   end
   exit()
 end
-$stdin.each_line() do |line|
-  data = line.chomp()
-  puts "linea: #{data}"
-  client.send(data)
-  printf("Sent: %p\n", data)
+#$stdin.each_line() do |line|
+#  data = line.chomp()
+#  puts "linea: #{data}"
+#  client.send(data)
+#  printf("Sent: %p\n", data)
+#end
+
+5.times do
+    #Kernel.sleep(0.3)
+    data = "hola"
+    puts "linea: #{data}"
+    client.send(data)
+    printf("Sent: %p\n", data)
 end
+
 client.close()
