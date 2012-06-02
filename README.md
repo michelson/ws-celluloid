@@ -4,8 +4,5 @@
 ## DCell test
   bundle exec ruby server.rb
   bundle exec ruby client.rb
+  open tests/index.html in browser
   
-  
-## Normal tcp test
-  bundle exec ruby normal_socket.rb
-  bundle exec ruby client.rb
