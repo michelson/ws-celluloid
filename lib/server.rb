@@ -29,6 +29,7 @@ class Server
     connection = Connection.new(socket, @callback)
     connection.keep_reading
   rescue EOFError
+    # finalize
     # Client disconnected prematurely
     # FIXME: should probably do something here
   end

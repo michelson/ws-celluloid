@@ -132,6 +132,10 @@ class Connection
     else
       raise WebSocketError, "Cannot send data before onopen callback"
     end
+    
+  rescue Execption => e
+    puts "End of stream here, Closing connections!!! #{e.message}"
+    close_connection_after_writing
   end
 
   # Send a ping to the client. The client must respond with a pong.

@@ -3,45 +3,67 @@
     <script src='js/swfobject.js'></script>
     <script src='js/FABridge.js'></script>
     <script src='js/web_socket.js'></script>
+    <script type="text/javascript" src="http://zeptojs.com/zepto.min.js"></script>
     <script>
     
-      function debug(string) {
-        var element = document.getElementById("debug");
+      var debug;
+      debug = function(string, div) {
+        if (div == null) {
+          div = "debug";
+        }
+        var element = document.getElementById(div);
         var p = document.createElement("p");
         p.appendChild(document.createTextNode(string));
         element.appendChild(p);
-      }
-      
-      function createWs(){
-        debug("intentanfo conectar")
-        var Socket = "MozWebSocket" in window ? MozWebSocket : WebSocket;
-        
-        ws = new Socket("ws://localhost:8080/UserName");
-        console.log(ws);
-      }
-      
-      function init() {
-        //var Socket, ws;
-        var Socket = "MozWebSocket" in window ? MozWebSocket : WebSocket;
-        var ws = new Socket("ws://localhost:8080/UserName");
-        console.log(ws);
-        
-        ws.onmessage = function(evt) { debug("Message: " + evt.data); };
-        ws.onclose = function() { 
-          debug("socket closed"); 
-          var t=setTimeout("createWs()",3000);
-        };
-        ws.onopen = function() {
-          debug("connected...");
-          ws.send("hello server");
-          ws.send("hello again");
-        };
       };
       
+      var createWs, send_message;
+      createWs = function() {
+        var Socket, ws;
+        debug("intentando conectar");
+        Socket = ("MozWebSocket" in window ? MozWebSocket : WebSocket);
+        ws = new Socket("ws://localhost:8080/Channel");
+        return console.log(ws);
+      };
+      send_message = function() {
+        ws.send($("form input")[0].value);
+        return alert("dsds");
+      };
+    
+      Zepto(function($){
+        //alert('Ready to Zepto!')
+        
+        var Socket, ws;
+        Socket = ("MozWebSocket" in window ? MozWebSocket : WebSocket);
+        ws = new Socket("ws://localhost:8080/Channel");
+        console.log(ws);
+        ws.onmessage = function(evt) {
+          return debug("Message: " + evt.data);
+        };
+        ws.onclose = function() {
+          var t;
+          debug("socket closed", "status");
+          return t = setTimeout("createWs()", 3000);
+        };
+        ws.onopen = function() {
+          debug("connected...", "status");
+          ws.send("hello server");
+          return ws.send("hello again");
+        };
 
+      })
+    
     </script>
   </head>
-  <body onload="init();">
-    <div id="debug" style="overflow:hidden;width100%;height:300px"></div>
+  <body>
+    <div id="debug" style="overflow: auto; width: 50%; height: 300px; background-color: rgb(204, 204, 204); padding: 10px; color: white; border: 1px solid DimGray;"></div>
+    <div id="status" style="position: fixed; right: 30%; padding: 10px; top: -1%; background-color: OrangeRed; color: wheat;"></div>
+    <div >
+      <form method="get" accept-charset="utf-8" onsubmit="send_message();return false;" style="position: fixed; padding: 10px; right: 26%; top: 60%;">
+          <p><input type="text" value=""></p>
+          <p><input type="submit" value="Send to WsServer &rarr;"></p>
+      </form>
+      
+    </div>
   </body>
 </html>
