@@ -55,6 +55,8 @@ class WebSocketServer
     end
 
     def create_web_socket(socket)
+      #socket = socket.socket.instance_variable_get(:@socket)
+      #ch = socket.readpartial(1024).chars.first
       ch = socket.getc()
       if ch == ?<
         # This is Flash socket policy file request, not an actual Web Socket connection.

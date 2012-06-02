@@ -8,7 +8,7 @@ require "./lib/web_socket"
 #  exit(1)
 #end
 
-client = WebSocket.new( "ws://localhost:8080/" )#ARGV[0])
+client = WebSocket.new( "ws://0.0.0.0:8080/" )#ARGV[0])
 puts("Connected")
 Thread.new() do
   while data = client.receive()
@@ -18,8 +18,8 @@ Thread.new() do
 end
 $stdin.each_line() do |line|
   data = line.chomp()
-  puts data
-  #client.send(data)
-  #printf("Sent: %p\n", data)
+  puts "linea: #{data}"
+  client.send(data)
+  printf("Sent: %p\n", data)
 end
 client.close()

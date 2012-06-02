@@ -5,7 +5,7 @@ class Server
   include Celluloid::IO
   
   def initialize(host, port)
-    @server = WebSocketServer.new(:accepted_domains => host, :port => port) #TCPServer.new(host, port)
+    @server = WebSocketServer.new(:accepted_domains => [host], :port => port) #TCPServer.new(host, port)
     puts "*** Starting TCP server on #{host}:#{port}"
     run!
   end
@@ -21,8 +21,11 @@ class Server
       puts("Connection accepted")
       puts("Path: #{ws.path}, Origin: #{ws.origin}")
       if ws.path == "/"
+        
         ws.handshake()
+        puts "PASO HANDSHAKE!!!"
         while data = ws.receive()
+          puts "RECIBIENDO DATA #{data}"
           printf("Received: %p\n", data)
           ws.send(data)
           printf("Sent: %p\n", data)

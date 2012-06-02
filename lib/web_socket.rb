@@ -5,15 +5,14 @@
 # Reference: http://tools.ietf.org/html/draft-ietf-hybi-thewebsocketprotocol-07
 # Reference: http://tools.ietf.org/html/draft-ietf-hybi-thewebsocketprotocol-10
 
-#require "base64"
+require "base64"
 #require "socket"
-#require "uri"
-#require "digest/md5"
-#require "digest/sha1"
-#require "openssl"
-#require "stringio"
-
 require "celluloid/io"
+require "uri"
+require "digest/md5"
+require "digest/sha1"
+require "openssl"
+require "stringio"
 
 
 class WebSocket
@@ -120,7 +119,7 @@ class WebSocket
         end
         reply_digest = read(16)
         expected_digest = hixie_76_security_digest(key1, key2, key3)
-        if reply_digest != expected_digest
+        if reply_digest.force_encoding("ASCII-8BIT") != expected_digest
           raise(WebSocket::Error,
             "security digest doesn't match: %p != %p" % [reply_digest, expected_digest])
         end
@@ -173,6 +172,7 @@ class WebSocket
       case @web_socket_version
         when "hixie-75", "hixie-76"
           data = force_encoding(data.dup(), "ASCII-8BIT")
+          #data.encode("ASCII-8BIT")
           write("\x00#{data}\xff")
           flush()
         else
@@ -321,6 +321,7 @@ class WebSocket
     end
 
     def send_frame(opcode, payload, mask)
+      puts payload.inspect
       payload = force_encoding(payload.dup(), "ASCII-8BIT")
       # Setting StringIO's encoding to ASCII-8BIT.
       buffer = StringIO.new(force_encoding("", "ASCII-8BIT"))
@@ -383,8 +384,10 @@ class WebSocket
     end
 
     def hixie_76_security_digest(key1, key2, key3)
-      bytes1 = websocket_key_to_bytes(key1)
-      bytes2 = websocket_key_to_bytes(key2)
+      bytes1 = websocket_key_to_bytes(key1) #.encode("BYNARY")
+      bytes2 = websocket_key_to_bytes(key2) #.encode("BYNARY")
+      key3 = key3.force_encoding("ASCII-8BIT") #.encode("UTF-8")
+      puts "#{key1} #{bytes1} AND #{key2} #{bytes2}"
       return Digest::MD5.digest(bytes1 + bytes2 + key3)
     end
 
