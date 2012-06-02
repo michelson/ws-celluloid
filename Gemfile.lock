@@ -1,9 +1,10 @@
 GIT
-  remote: https://github.com/imanel/libwebsocket.git
-  revision: 6ec281507935c710d43fe5119052fff696db8f94
+  remote: git://github.com/igrigorik/em-websocket.git
+  revision: b9d439cd3494db3225587ccf7cb060f4b37a9f13
   specs:
-    libwebsocket (0.2.0.pre)
-      addressable
+    em-websocket (0.3.7)
+      addressable (>= 2.1.1)
+      eventmachine (>= 0.12.9)
 
 GEM
   remote: http://rubygems.org/
@@ -26,6 +27,8 @@ GEM
       redis
       redis-namespace
       reel (~> 0.0.1)
+    eventmachine (0.12.10)
+    eventmachine (0.12.10-java)
     ffi (1.0.11)
     ffi (1.0.11-java)
     ffi-rzmq (0.9.3)
@@ -53,4 +56,4 @@ DEPENDENCIES
   celluloid
   celluloid-io
   dcell
-  libwebsocket!
+  em-websocket!
