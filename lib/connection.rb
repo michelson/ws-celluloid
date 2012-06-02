@@ -35,7 +35,7 @@ class Connection
     begin
       @handler.unbind if @handler
     rescue => e
-      debug [:error, e]
+      puts [:error, e]
       # These are application errors - raise unless onerror defined
       trigger_on_error(e) || raise(e)
     end
@@ -60,7 +60,7 @@ class Connection
     puts [:receive_data, data]
 
     if @handler
-      @handler.receive_data(data)
+      @handler.receive_data(data.force_encoding("ASCII-8BIT"))
     else
       dispatch(data)
     end
@@ -216,7 +216,7 @@ class Connection
 
   def close_websocket_private(code, body = nil)
     if @handler
-      debug [:closing, code]
+      puts [:closing, code]
       @handler.close_websocket(code, body)
     else
       # The handshake hasn't completed - should be safe to terminate

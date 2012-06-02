@@ -1,4 +1,5 @@
-# Celluloid-io with libwebsocket proof of concept
+# Celluloid-io with em-websocket proof of concept 
+## based on web3-celluloid repo
 
 ## DCell test
   bundle exec ruby server.rb
