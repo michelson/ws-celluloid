@@ -21,10 +21,22 @@ DCell.start :addr => "#{CONFIG["server"]["host"]}:#{port}", :id => "id-#{port}",
     :port  => CONFIG["adapter"]["port"]
 }
 
+#single process
 supervisor = Server.supervise_as(:websockets, "0.0.0.0", CONFIG["server"]["port"].to_i)
 DCell::Global[:websockets] = supervisor.actor
 trap("INT") { supervisor.terminate; exit }
 sleep
+
+#cluster-ing
+
+#supervisor = Server.supervise_as(:websockets, "0.0.0.0", CONFIG["server"]['nodes']['one']['port'].to_i)
+#DCell::Global[:websockets1] = supervisor.actor
+
+#supervisor2 = Server.supervise_as(:websockets, "0.0.0.0", CONFIG["server"]['nodes']['two']['port'].to_i)
+#DCell::Global[:websockets2] = supervisor2.actor
+
+#trap("INT") { supervisor1.terminate; supervisor2.terminate; exit }
+#sleep
 
 
 

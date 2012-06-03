@@ -22,7 +22,7 @@
         var Socket, ws;
         debug("intentando conectar");
         Socket = ("MozWebSocket" in window ? MozWebSocket : WebSocket);
-        ws = new Socket("ws://localhost:8080/Channel");
+        ws = new Socket("ws://localhost:3000/Channel");
         return console.log(ws);
       };
       send_message = function() {
@@ -36,7 +36,7 @@
         var Socket, ws;
         Socket = ("MozWebSocket" in window ? MozWebSocket : WebSocket);
         
-        ws = new Socket("ws://localhost:8080/Channel");
+        ws = new Socket("ws://localhost:3000/Channel");
         console.log(ws);
         ws.onmessage = function(evt) {
           console.log(evt)

@@ -6,18 +6,22 @@ class Server
     # This is actually an evented Celluloid::IO::TCPServer
     @server = TCPServer.new(host, port)
     @callback = Callback.new
-    @callback.onopen{|ws| 
+    @callback.onopen do |ws| 
       @connections += 1
+      puts "*** #{@connections} Open connections"
       @websockets[ws.request['path']] = ws 
-      }
+    end
     @callback.onmessage do |ws, msg|
       ##puts @websockets.inspect
       puts "MESSAGE: #{msg}"
       ws.send("Did you say: '#{msg}', sir?")
     end
     @callback.onerror{|ws, err| 
-      @connections -= 1
       puts "ERROR: #{err}" 
+    }
+    @callback.onclose{|ws, err| 
+      @connections -= 1 unless connections.zero?
+      puts "*** #{@connections} Open connections"
     }
 
     @websockets = {}
@@ -37,7 +41,6 @@ class Server
   end
 
   def handle_connection(socket)
-    puts "CONNECTIONS: #{connections}"
     connection = Connection.new(socket, @callback)
     connection.keep_reading
   rescue EOFError

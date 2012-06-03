@@ -5,18 +5,25 @@
 
     bundle exec ruby server.rb
     bundle exec ruby pub.rb
-    or
+    
+  or
+  
     foreman start
     
 ## html5 websocket
 
     open tests/index.html in browser
   
+## Haproxy
+
+    haproxy -f config/haproxy.cfg
+
 ## HAPROXY readings
 
++ http://catchvar.com/nodejs-server-and-web-sockets-on-amazon-ec2-w
 
-http://jfarcand.wordpress.com/2011/10/06/configuring-haproxy-for-websocket/
++ http://jfarcand.wordpress.com/2011/10/06/configuring-haproxy-for-websocket/
 
-http://stackoverflow.com/questions/8662377/haproxy-and-socket-io-not-fully-working 
++ http://stackoverflow.com/questions/8662377/haproxy-and-socket-io-not-fully-working 
 
-GOOD: http://stackoverflow.com/questions/4360221/haproxy-websocket-disconnection
++ GOOD: http://stackoverflow.com/questions/4360221/haproxy-websocket-disconnection

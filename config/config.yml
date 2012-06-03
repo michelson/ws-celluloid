@@ -3,6 +3,11 @@ defaults: &defaults
   server:
     host: tcp://127.0.0.1
     port: 8080
+    nodes:
+      one:
+        port: 8080
+      two:
+        port: 8082
   monitor:
     host: tcp://127.0.0.1
     port: 9234

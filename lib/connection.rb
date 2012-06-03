@@ -135,7 +135,7 @@ class Connection
       raise WebSocketError, "Cannot send data before onopen callback"
     end
     
-  rescue Execption => e
+  rescue Exception => e
     puts "End of stream here, Closing connections!!! #{e.message}"
     close_connection_after_writing
   end
