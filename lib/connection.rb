@@ -25,7 +25,7 @@ class Connection
     @data = ''
     @socket = socket
     @callback = callback
-    puts "initialized connection"
+    #puts "initialized connection"
   end
 
   def keep_reading

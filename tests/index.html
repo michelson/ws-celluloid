@@ -33,7 +33,9 @@
         Socket = ("MozWebSocket" in window ? MozWebSocket : WebSocket);
         
         ws = new Socket("ws://localhost:3000/Channel");
+        
         console.log(ws);
+        
         ws.onmessage = function(evt) {
           console.log(evt)
           return debug("Message: " + evt.data);
