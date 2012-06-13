@@ -45,10 +45,21 @@ class Server
   def handle_connection(socket)
     connection = Connection.new(socket, @callback)
     connection.keep_reading
+  
+    # By now we'll be back in a :clean state!
+    begin
+      puts "We should now be in a clean state again: #{supervisor.actor.state}"
+    rescue Celluloid::DeadActorError
+      # Perhaps we got ahold of the actor before the supervisor restarted it
+      #retry
+    end
+  
   rescue EOFError
     # finalize
     # Client disconnected prematurely
     # FIXME: should probably do something here
+    
+
   end
 
   def notify(target, message)
