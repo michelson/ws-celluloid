@@ -3,8 +3,10 @@
 
 ## DCell test
 
-    bundle exec ruby server.rb
-    bundle exec ruby pub.rb
+    
+    tab1: bundle exec ruby process.rb 8087 websockets1
+    tab2: bundle exec ruby process.rb 8083 websockets1
+    tab3: bundle exec ruby pub.rb
     
   or
   

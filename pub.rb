@@ -13,11 +13,18 @@ puts "started dcell"
 loop {
   Kernel.sleep(1)
   server = DCell::Global[:websockets]
+  server2 = DCell::Global[:websockets1]
   puts "sending notification"
   server.notify!("Channel", "notification from ruby")
+  server2.notify!("Channel", "notification from ruby")
+  
   Kernel.sleep(1)
   server.notify!("Channel/one", "notification from ruby 2")
+  server2.notify!("Channel/one", "notification from ruby 2")
+  
   Kernel.sleep(1)
   server.notify!("Channel/two", "notification from ruby 2")
+  server2.notify!("Channel/two", "notification from ruby 2")
+  
 }
 puts "done sending"

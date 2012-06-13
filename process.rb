@@ -12,10 +12,12 @@ HandlerFactory = EventMachine::WebSocket::HandlerFactory
 CONFIG = YAML.load(open "config/config.yml")["development"]
 
 port  = ARGV[0]
-msg = :websockets
+msg =  ARGV[1].to_sym || :websockets
 
-#port = CONFIG["server"]["port"] + 1
-DCell.start :addr => "#{CONFIG["server"]["host"]}:#{port}", :id => "id-#{port}", 
+## usage: bundle exec ruby process.rb 8087 websockets1
+
+dport = port.to_i + 1
+DCell.start :addr => "#{CONFIG["server"]["host"]}:#{dport}", :id => "id-#{dport}", 
 :registry => {
   :adapter => CONFIG["adapter"]["type"],
     :host  => CONFIG["adapter"]["host"],
@@ -23,7 +25,7 @@ DCell.start :addr => "#{CONFIG["server"]["host"]}:#{port}", :id => "id-#{port}",
 }
 
 #single process
-supervisor = Server.supervise_as(:websockets, "0.0.0.0", CONFIG["server"]["port"].to_i)
-DCell::Global[:websockets] = supervisor.actor
+supervisor = Server.supervise_as(msg, "0.0.0.0", port.to_i)
+DCell::Global[msg] = supervisor.actor
 trap("INT") { exit }
 sleep
