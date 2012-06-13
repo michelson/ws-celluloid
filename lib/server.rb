@@ -46,6 +46,7 @@ class Server
     connection = Connection.new(socket, @callback)
     connection.keep_reading
   rescue EOFError
+    puts "WASS?"
     # finalize
     # Client disconnected prematurely
     # FIXME: should probably do something here
@@ -54,9 +55,11 @@ class Server
   def notify(target, message)
     puts "NOTIFY: #{target} - #{message}"
     ws = @websockets["/#{target}"]
-    puts "#{ws.size} socket connections"
-    #ws && ws.send(message)
-    ws.each{ |w| w.send(message) }
+    unless ws.nil?
+      puts "#{ws.size} socket connections"
+      #ws && ws.send(message)
+      ws.each{ |w| w.send(message) }
+    end
   end
   
   def send_messages_to_sockets(msg, path)
