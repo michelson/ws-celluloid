@@ -14,7 +14,7 @@ class Server
     end
     @callback.onmessage do |ws, msg|
       #puts @websockets.inspect
-      puts "MESSAGE: #{msg}"
+      puts "MESSAGE IN: #{msg}"
       #ws.send("Did you say: '#{msg}', sir?")
       begin
       send_messages_to_sockets(msg, ws.request['path'])
@@ -85,10 +85,11 @@ class Server
     @websockets.keys.each do |w| 
       @websockets[w].each do |o|
         #puts o.inspect
+        puts "MESSAGE OUT: #{msg} to #{w}"
         begin
-          o.send("Did you say: '#{msg}', sir?")
+          o.send(msg)
         rescue Exception => e
-          puts "Error enviando mensajes a sockets: #{e}"
+          puts "Error sending menssages to sockets: #{e}"
         end
       end
     end
