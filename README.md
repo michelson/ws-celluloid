@@ -19,6 +19,27 @@
 ## Haproxy
 
     haproxy -f config/haproxy.cfg
+    
+## bench
+  
+     node ./wsbench -c 2000 -r 50 ws://localhost:8083
+     time ./wsbench -c 2000 -r 50 ws://localhost:8083
+ 
+     > time ./wsbench -c 6000 -r 50 ws://localhost:8083
+     Success rate: 100% from 6000 connections
+     5.96s user 
+     1.87s system 
+     6% cpu 
+     2:00.13 total
+     
+     # 1.9.3
+     time ./wsbench -c 60000 -r 600 ws://localhost:8083
+     Success rate: 51.1% from 60000 connections
+     ./wsbench -c 60000 -r 600 ws://localhost:8083  
+     33.18s user 
+     7.97s system 
+     40% cpu 
+     1:40.95 total
 
 ## HAPROXY readings
 
